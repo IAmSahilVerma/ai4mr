@@ -17,9 +17,20 @@ from matplotlib import pyplot
 from joblib import dump, load
 import pandas as pd
 import numpy as np
+import os
 
+# this method creates necessary directories to store the model and results
+def setup_directories():
+    directories = ['experiments', 'results']
+    
+    for directory in directories:
+        if not os.path.exists(directory):
+            os.makedirs(directory)
+            print(f"Created directory: {directory}")
+        else:
+            print(f"Directory already exists: {directory}")
 
-# this cript imports the data with the information of the stars
+# this script imports the data with the information of the stars
 def get_dataset():
     data = pd.read_table('data/data_sample_mass_radius.txt', sep="\t")
     # read data with errors
@@ -195,6 +206,9 @@ def evaluate_model(model, X_train, y_train, X_test, y_test):
 ##############################
 # Mass and radius estimation #
 ##############################
+
+# Setup directories
+setup_directories()
 
 # Read raw data
 data = get_dataset()
